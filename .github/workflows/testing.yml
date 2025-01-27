@@ -3,7 +3,7 @@ name: SSE automation workflow
 on: [push]
 
 jobs:
-  style:
+  style_check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -14,3 +14,27 @@ jobs:
         run: pip install black
       - name: "Run a style check using black utility"
         run: black --check .
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: "Install pytest, coverage, numpy, and matlpotlib"
+        run: pip install pytest coverage numpy matplotlib
+      - name: "Run integration test using pytest"
+        run: python -m pytest tests/integration/test_diffusion2d.py
+      - name: "Run unit test using pytest"
+        run: python -m pytest tests/unit/test_diffusion2d_functions.py
+      - name: "Calculate coverage for unit test"
+        run: coverage run -m pytest tests/unit/test_diffusion2d_functions.py
+      - name: "Calculate coverage for integration test"
+        run: coverage run -m pytest tests/integration/test_diffusion2d.py
+      - name: "Upload artifact"
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-file
+          path: .coverage
+          include-hidden-files: true
+          retention-days: 1

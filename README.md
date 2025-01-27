@@ -8,4 +8,4 @@ The code used in this exercise is based on [Chapter 7 of the book "Learning Scie
 
 Please check the `LICENSE` file in this repository.
 
-![SSE automation workflow](https://github.com/vaibhav17octo/automation-exercise/blob/main/.github/workflows/testing.yml/badge.svg)
+![SSE automation workflow](https://github.com/vaibhav17octo/automation-exercise/actions/workflows/testing.yml/badge.svg)
